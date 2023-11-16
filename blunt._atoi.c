@@ -1,33 +1,28 @@
 #include "shell.h"
 
 /**
- * interactive - returns true if shell is in interactive mode
+ * interactive - returns true if shell is interactive mode
  * @info: struct address
- * @info:the struct address
  *
- * Return: 1 if in interactive mode, 0 otherwise
+ * Return: 1 if interactive mode, 0 otherwise
  */
 int interactive(info_t *info)
 {
-    return (isatty(STDIN_FILENO) && info->readfd <= 2);
+	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
-
- * is_delim - checks if character is a delimiter
+ * is_delim - checks if character is a delimeter
  * @c: the char to check
- * @delim: the delimiter string
- * is_delim - checks if the character is a delimeter
- * @c: the character to check
  * @delim: the delimeter string
  * Return: 1 if true, 0 if false
  */
 int is_delim(char c, char *delim)
 {
-    while (*delim)
-        if (*delim++ == c)
-            return (1);
-    return (0);
+	while (*delim)
+		if (*delim++ == c)
+			return (1);
+	return (0);
 }
 
 /**
@@ -35,9 +30,13 @@ int is_delim(char c, char *delim)
  *@c: The character to input
  *Return: 1 if c is alphabetic, 0 otherwise
  */
+
 int _isalpha(int c)
 {
-    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	else
+		return (0);
 }
 
 /**
@@ -45,27 +44,31 @@ int _isalpha(int c)
  *@s: the string to be converted
  *Return: 0 if no numbers in string, converted number otherwise
  */
+
 int _atoi(char *s)
 {
-    int loop_counter, sign = 1, flag = 0, converted_value;
-    unsigned int result = 0;
+	int i, sign = 1, flag = 0, output;
+	unsigned int result = 0;
 
-    for (loop_counter = 0; s[loop_counter] != '\0' && flag != 2; loop_counter++)
-    {
-        if (s[loop_counter] == '-')
-            sign *= -1;
+	for (i = 0;  s[i] != '\0' && flag != 2; i++)
+	{
+		if (s[i] == '-')
+			sign *= -1;
 
-        if (s[loop_counter] >= '0' && s[loop_counter] <= '9')
-        {
-            flag = 1;
-            result *= 10;
-            result += (s[loop_counter] - '0');
-        }
-        else if (flag == 1)
-            flag = 2;
-    }
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			flag = 1;
+			result *= 10;
+			result += (s[i] - '0');
+		}
+		else if (flag == 1)
+			flag = 2;
+	}
 
-    converted_value = (sign == -1) ? -result : result;
+	if (sign == -1)
+		output = -result;
+	else
+		output = result;
 
-    return converted_value;
+	return (output);
 }
